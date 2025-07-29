@@ -6,7 +6,7 @@ import { parseXml } from '../steps';
 import StepsList from '../Components/StepsList';
 import { useWebContainers } from '../hooks/useWebContainers';
 import FileExplorer from '../Components/FileExplorer';
-import TabView from '../Components/TabView';
+import {TabView} from '../Components/TabView';
 import { PreviewFrame } from '../Components/PreviewFrame';
 
 function Builder() {
@@ -91,8 +91,8 @@ function Builder() {
         
       }))
     }
-    console.log("yaa fiels")
-    console.log(files);
+    // console.log("yaa fiels")
+    // console.log(files);
     
   },[steps,files])
 
@@ -137,7 +137,8 @@ function Builder() {
       const mountStructure = createMountStructure(files);
   
     // Mount the structure if WebContainer is available
-    console.log(mountStructure);
+    // console.log("this is the mount structure")
+    // console.log(mountStructure);
     webcontainer?.mount(mountStructure);
     
   },[files, webcontainer])
@@ -218,35 +219,43 @@ function Builder() {
           <h1 className="text-xl font-semibold text-gray-100">Website Builder</h1>
           <p className="text-sm text-gray-400 mt-1">Prompt: {userPrompt}</p>
         </header>
-        <div className='grid grid-cols-3'>
-          <div className='border-amber-50 border-2 h-screen'>good
-          <StepsList
-                  steps={steps}
-                  currentStep={currentStep}
-                  onStepClick={setCurrentStep}
-                /></div>
+        <div className='grid grid-cols-10 gap-2'>
+          <div className='border-gray-600 col-span-2 border-2 h-full rounded-2xl'>
+              <StepsList
+                      steps={steps}
+                      currentStep={currentStep}
+                      onStepClick={setCurrentStep}
+                    />
+          </div>
           {/* <div className='border-amber-50 border-2 h-screen'>ksfd</div>
           <div className='border-amber-50 border-2 h-screen'>ksffd</div> */}
-           <div className="col-span-1">
+          <div className='border-gray-600 col-span-2 border-2 h-full rounded-2xl'>
               <FileExplorer
                 files={files} 
                 onFileSelect={setSelectedFile}
               />
-            </div>
-          <div className="col-span-2 bg-gray-900 rounded-lg shadow-lg p-4 h-[calc(100vh-8rem)]">
+          </div>
+          <div className= 'border-gray-600 border-2 col-span-6  rounded-lg shadow-lg p-4 h-[calc(100vh-4rem)] '>
             <TabView activeTab={activeTab} onTabChange={setActiveTab} />
             <div className="h-[calc(100%-4rem)]">
               {activeTab === 'code' ? (
-                <CodeEditor file={selectedFile} />
+                <CodeEditor file={selectedFile}/>
               ) : (
                 <PreviewFrame webContainer={webcontainer} files={files} />
               )}
             </div>
+            
           </div>
-
+          <div className='border-gray-600 border-2 col-span-6  h-8rem'>
+dd
+            </div>
         </div>
+            
+          
+
+        
       </div>
-      <CodeEditor/>
+      
     </div>
   )
 }
